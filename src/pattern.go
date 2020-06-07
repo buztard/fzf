@@ -207,6 +207,14 @@ func parseTerms(fuzzy bool, caseMode Case, normalize bool, str string) []termSet
 				typ = termFuzzy
 				text = text[1:]
 			}
+		} else if strings.HasSuffix(text, "'") {
+			if fuzzy && !inv {
+				typ = termExact
+				text = text[:len(text)-1]
+			} else {
+				typ = termFuzzy
+				text = text[:len(text)-1]
+			}
 		} else if strings.HasPrefix(text, "^") {
 			if typ == termSuffix {
 				typ = termEqual
